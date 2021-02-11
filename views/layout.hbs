@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{title}}</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css"
+        integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA=="
+        crossorigin="anonymous" />
+</head>
+
+<body>
+  <a href="/">Home</a>
+  <div class="messages">
+    {{#if success}}
+    <div class="flash success">
+      <p>{{success}}</p>
+    </div>
+    {{/if}}
+
+    {{#if failure}}
+    <div class="flash failure">
+      <p>{{failure}}</p>
+    </div>
+    {{/if}}
+  </div>
+  {{#if session.logged_in }}
+  <a href="/my-account">My Account</a>
+  <form action="/auth/logout" method="POST"><button type="submit">Logout</button></a>
+  </form> 
+  {{else}}
+  <a href="/auth">Login</a>
+  {{/if}}
+  {{{body}}}
+</body>
+
+</html>

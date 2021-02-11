@@ -1,0 +1,36 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.flash p {
+  margin: 0;
+  padding: 1em;
+  font-weight: bold;
+}
+
+.flash {
+  margin-top: .5em;
+  margin-bottom: .5em;
+  border: 2px solid grey;
+  background-color: lightgrey;
+}
+
+.flash.success {
+  background-color: lightgreen;
+  border-color: green;
+}
+
+.flash.failure {
+  background-color: lightcoral;
+  border-color: red;
+  color: black;
+}
+
+form.dropzone {
+  border: 4px solid #9b4dca;
+}
