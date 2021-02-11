@@ -1,0 +1,13 @@
+Editing: {{video.title}}
+
+<form action="/my-account/videos/edit/{{video.watchId}}" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" name="title" id="title" value="{{video.title}}">
+
+    <label for="description">Description:</label>
+    <textarea name="description" id="description" cols="30" rows="10">{{video.description}}</textarea>
+    
+    <label for="views">Views: {{video.views}}</label>
+
+    <button type="submit">Done</button>
+</form>

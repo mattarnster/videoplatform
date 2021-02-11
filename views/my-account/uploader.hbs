@@ -10,7 +10,7 @@
 <script type="text/javascript">
     Dropzone.options.dropzoneForm = {
         success: function (file, response) {
-            alert('Upload complete');
+            window.location = "http://localhost:3000/my-account/videos/edit/" + response.watchId;
         }
     }
 </script>

@@ -7,10 +7,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css"
         integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA=="
         crossorigin="anonymous" />
-</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/holiday.css@0.9.5" /></head>
 
 <body>
-  <a href="/">Home</a>
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      {{#if session.logged_in }}
+      <li><a href="/my-account">My Account</a></li>
+      <li><form action="/auth/logout" method="POST"><button type="submit">Logout</button></a>
+      </form></li> 
+      {{else}}
+      <li><a href="/auth">Login</a></li>
+      {{/if}}
+    </ul>
+      
+  </nav>
+  
   <div class="messages">
     {{#if success}}
     <div class="flash success">
@@ -24,13 +37,6 @@
     </div>
     {{/if}}
   </div>
-  {{#if session.logged_in }}
-  <a href="/my-account">My Account</a>
-  <form action="/auth/logout" method="POST"><button type="submit">Logout</button></a>
-  </form> 
-  {{else}}
-  <a href="/auth">Login</a>
-  {{/if}}
   {{{body}}}
 </body>
 

@@ -29,6 +29,12 @@ module.exports = {
       views: {
         type: Sequelize.INTEGER
       },
+      originalFileName: {
+        type: Sequelize.STRING
+      },
+      published: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

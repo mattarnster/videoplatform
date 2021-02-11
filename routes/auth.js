@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
   if (req.session.logged_in) {
     return res.redirect('/');
   }
-  res.render('login');
+  res.render('auth/login');
 });
 
 /* POST login */
@@ -25,7 +25,7 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       req.flash('failure', 'Both fields are required.')
-      return res.render('login');
+      return res.render('auth/login');
     }
 
     let { email, password } = req.body;
@@ -34,13 +34,13 @@ router.post(
 
     if (user === null) {
       req.flash('failure', 'Invalid email/password');
-      return res.render('login');
+      return res.render('auth/login');
     }
 
     bcrypt.compare(password, user.password, (err, result) => {
       if (err) {
         req.flash('failure', 'Internal server error, try again later.');
-        return res.render('login');
+        return res.render('auth/login');
       }
 
       if (result) {
@@ -50,7 +50,7 @@ router.post(
         res.redirect('/');
       } else {
         req.flash('failure', 'Invalid email/password');
-        return res.render('login');
+        return res.render('auth/login');
       }
     })
   }
@@ -61,7 +61,7 @@ router.get('/signup', (req, res, next) => {
   if (req.session.logged_in) {
     return res.redirect('/');
   }
-  res.render('signup')
+  res.render('auth/signup')
 });
 
 /* POST signup */
@@ -77,12 +77,12 @@ router.post(
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       req.flash('failure', errors.toString())
-      return res.render('signup');
+      return res.render('auth/signup');
     }
 
     if (req.body.password !== req.body.confirm_password) {
       req.flash('failure', 'Passwords don\'t match');
-      return res.render('signup');
+      return res.render('auth/signup');
     }
 
     bcrypt.hash(req.body.password, 12, async (err, encPassword) => {

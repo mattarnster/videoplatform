@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 
 var db = require('../models');
 var Videos = db.Video;
@@ -11,11 +12,25 @@ router.get('/', async function(req, res, next) {
     if (vid === null) {
       return res.render('404');
     }
-    return res.render('watch-video', { video: vid });
+    return res.render('videos/watch-video', { video: vid });
   }
 
   var vids = await Videos.findAll();
-  return res.render('videos', { videos: vids });
+  return res.render('videos/videos', { videos: vids });
 });
+
+router.get('/getVideo/:id', async function (req, res, next) {
+  var vid = await Videos.findOne({ where: { watchId: req.params.id} });
+  if (vid === null) {
+    return res.render('404');
+  }
+
+  vid.views += 1;
+  await vid.save();
+  
+  return res.sendFile('public/videos/' + vid.userId + '/' + vid.watchId + '/' + vid.originalFileName, {
+    root: './'
+  })
+})
 
 module.exports = router;

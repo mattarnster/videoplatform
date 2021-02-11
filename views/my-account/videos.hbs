@@ -1,0 +1,6 @@
+{{#each videos}}
+    <a href="/my-account/videos/edit/{{this.watchId}}">{{this.title}}</a>
+    <form action="/my-account/videos/delete/{{this.watchId}}" method="POST">
+        <button type="submit">Delete video</button>
+    </form>
+{{/each}}

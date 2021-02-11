@@ -20,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     likes: DataTypes.INTEGER,
     dislikes: DataTypes.INTEGER,
-    views: DataTypes.INTEGER
+    views: DataTypes.INTEGER,
+    originalFileName: DataTypes.STRING,
+    published: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'Video',
