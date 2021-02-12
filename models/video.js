@@ -22,7 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     dislikes: DataTypes.INTEGER,
     views: DataTypes.INTEGER,
     originalFileName: DataTypes.STRING,
-    published: DataTypes.BOOLEAN,
+    transcoded: DataTypes.BOOLEAN,
+    published: {
+      type: DataTypes.BOOLEAN,
+      get() {
+        const rawValue = this.getDataValue('published');
+        return (rawValue ? true : false);
+      }
+    },
   }, {
     sequelize,
     modelName: 'Video',

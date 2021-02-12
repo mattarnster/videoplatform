@@ -23,6 +23,7 @@ module.exports = {
       dislikes: 0,
       originalFileName: "test.mp4",
       published: 0,
+      transcoded: 0,
       createdAt: new Date(),
       updatedAt: new Date()
     }]);

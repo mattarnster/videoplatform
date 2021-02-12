@@ -33,7 +33,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       published: {
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.BOOLEAN
+      },
+      transcoded: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

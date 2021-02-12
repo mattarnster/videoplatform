@@ -1,5 +1,6 @@
 var express = require('express');
 const { nanoid } = require('nanoid');
+const mt = require('media-thumbnail');
 var router = express.Router();
 
 const db = require('../models');
@@ -38,12 +39,8 @@ router.post('/uploader', async function (req, res, next) {
       return res.send(400);
     }
 
-    console.log('file');
-
     let upload = req.files.file;
     let uploadId = nanoid(10);
-
-    console.log('upload id');
 
     let newVideo = await Videos.create({
       userId: req.session.user_id,
@@ -52,19 +49,28 @@ router.post('/uploader', async function (req, res, next) {
       description: "",
       originalFileName: upload.name,
       views: 0,
-      likes: 0
+      likes: 0,
+      transcoded: false,
+      published: false,
     });
 
-    console.log('video');
+    let videoPathRoot = './public/videos/' + req.session.user_id + '/' + uploadId;
+    let videoPath = videoPathRoot + '/' + upload.name;
 
-    await upload.mv('./public/videos/' + req.session.user_id + '/' + uploadId + '/' + upload.name);
+    await upload.mv(videoPath);
 
-    console.log('storage');
+    await mt.forVideo(
+      videoPath,
+      videoPathRoot + '/' + 'thumb.png',
+      {
+        width: 200
+      }
+    );
 
     return res.json(newVideo);
 
   } catch (err) {
-    return res.status(500);
+    return res.send(err).status(500);
   }
 });
 
@@ -85,8 +91,10 @@ router.get('/videos/edit/:id', async function (req, res, next) {
 router.post('/videos/edit/:id', async function (req, res, next) {
   let video = await Videos.findOne({ where: { watchId: req.params.id } });
   if (video && video.userId == req.session.user_id) {
+    console.log(req.body);
     video.title = req.body.title;
     video.description = req.body.description.trim();
+    video.published = (req.body.published == 'yes' ? true : false);
     await video.save();
 
     req.flash('success', 'Video updated successfully!');

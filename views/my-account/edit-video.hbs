@@ -1,5 +1,11 @@
 Editing: {{video.title}}
 
+<p>Thumbnail:</p>
+<img src="/videos/{{video.userId}}/{{video.watchId}}/thumb.png" width=200/>
+
+<p>Video:</p>
+<video src="/watch/getVideo/{{video.watchId}}" height=400 width=700 style="background-color: #000" controls></video>
+
 <form action="/my-account/videos/edit/{{video.watchId}}" method="POST">
     <label for="title">Title:</label>
     <input type="text" name="title" id="title" value="{{video.title}}">
@@ -8,6 +14,10 @@ Editing: {{video.title}}
     <textarea name="description" id="description" cols="30" rows="10">{{video.description}}</textarea>
     
     <label for="views">Views: {{video.views}}</label>
+
+    <label for="published">Publish this video? 
+        <input type="checkbox" name="published" id="published" value="yes" {{#if video.published}}checked{{/if}}>
+    </label>
 
     <button type="submit">Done</button>
 </form>

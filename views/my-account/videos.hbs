@@ -1,6 +1,19 @@
+<nav>
+    <ul>
+        <li><a href="/my-account/videos">My videos</a></li>
+        <li><a href="/my-account/uploader">Upload a video</a></li>
+    </ul>
+</nav>
+<div class="videos" style="margin-top: 2em;">
 {{#each videos}}
-    <a href="/my-account/videos/edit/{{this.watchId}}">{{this.title}}</a>
+<div class="video">
+    <a href="/my-account/videos/edit/{{this.watchId}}">
+    <img src="/videos/{{this.userId}}/{{this.watchId}}/thumb.png" width=200/>
+    <br/>{{this.title}}
+    </a>
     <form action="/my-account/videos/delete/{{this.watchId}}" method="POST">
         <button type="submit">Delete video</button>
     </form>
+</div>
 {{/each}}
+</div>

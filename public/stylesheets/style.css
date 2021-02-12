@@ -1,12 +1,3 @@
-/* body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-} */
-
 .flash p {
   margin: 0;
   padding: 1em;
@@ -33,4 +24,8 @@ a {
 
 form.dropzone {
   border: 4px solid #9b4dca;
+}
+
+.main-wrapper {
+  margin-top: 2em;
 }
