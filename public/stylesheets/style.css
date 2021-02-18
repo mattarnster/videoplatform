@@ -29,3 +29,9 @@ form.dropzone {
 .main-wrapper {
   margin-top: 2em;
 }
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}

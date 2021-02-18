@@ -20,9 +20,17 @@ router.get('/', async function(req, res, next) {
 });
 
 router.get('/getVideo/:id', async function (req, res, next) {
-  var vid = await Videos.findOne({ where: { watchId: req.params.id, published: true } });
+  var vid = await Videos.findOne({ where: { watchId: req.params.id } });
   if (vid === null) {
     return res.render('404');
+  }
+  
+  if (vid.published === false && req.session.user_id === vid.userId) {
+    return res.sendFile('public/videos/' + vid.userId + '/' + vid.watchId + '/' + vid.originalFileName, {
+      root: './'
+    });
+  } else if (vid.published === false) {
+    return res.sendStatus(401);
   }
 
   vid.views += 1;

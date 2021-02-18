@@ -1,6 +1,10 @@
 var express = require('express');
 const { nanoid } = require('nanoid');
 const mt = require('media-thumbnail');
+const ffmpeg = require('fluent-ffmpeg');
+const path = require('path');
+const amqp = require('amqplib/callback_api');
+
 var router = express.Router();
 
 const db = require('../models');
@@ -30,6 +34,7 @@ router.get('/uploader', async function (req, res, next) {
 })
 
 router.post('/uploader', async function (req, res, next) {
+
   if (!req.session.logged_in) {
     return res.redirect('/');
   }
@@ -54,23 +59,44 @@ router.post('/uploader', async function (req, res, next) {
       published: false,
     });
 
+    
     let videoPathRoot = './public/videos/' + req.session.user_id + '/' + uploadId;
     let videoPath = videoPathRoot + '/' + upload.name;
+    
+    try  {
+      await upload.mv(videoPath);
+    } catch (err) {
+      return res.send('Couldn\'t move video ' + err);
+    }
 
-    await upload.mv(videoPath);
-
-    await mt.forVideo(
-      videoPath,
-      videoPathRoot + '/' + 'thumb.png',
-      {
-        width: 200
-      }
-    );
-
+    // Transcode queue
+    sendToQueue({
+      id: newVideo.id,
+      userId: newVideo.userId,
+      watchId: newVideo.watchId,
+      originalFileName: newVideo.originalFileName
+    });
+    
+    try {
+      var proc = new ffmpeg(videoPath)
+      .takeScreenshots({
+          count: 1,
+          timemarks: [ '5' ] // number of seconds
+        }, path.join(videoPathRoot), function(err) {
+        console.log('screenshots were saved')
+      });
+    } catch (err) {
+      console.log(err)
+      return res.json(newVideo)
+    }
+    
     return res.json(newVideo);
 
   } catch (err) {
-    return res.send(err).status(500);
+    console.log(err);
+    console.log(req.session.user_id);
+    console.log(req.session.logged_in);
+    return res.send(err);
   }
 });
 
@@ -114,5 +140,16 @@ router.post('/videos/delete/:id', async function (req, res, next) {
     return res.sendStatus(401);
   }
 })
+
+function sendToQueue(video) {
+  amqp.connect('amqp://localhost', function(err, conn) {
+    conn.createChannel(function(err, ch) {
+      const q = 'transcode';
+      ch.assertQueue(q, { durable: true });
+      ch.sendToQueue(q, new Buffer.from(JSON.stringify(video)), { persistent: true });
+      console.log("Message sent to queue : ", video);
+    });
+  });
+}
 
 module.exports = router;
