@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.Video.belongsTo(models.User, {
+        foreignKey: 'userId'
+      });
     }
   };
   Video.init({
@@ -30,6 +32,14 @@ module.exports = (sequelize, DataTypes) => {
         return (rawValue ? true : false);
       }
     },
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        const rawValue = this.getDataValue('createdAt');
+        const date = new Date(rawValue).toLocaleDateString();
+        return date;
+      }
+    }
   }, {
     sequelize,
     modelName: 'Video',

@@ -19,6 +19,7 @@
     "express-session": "^1.17.1",
     "express-validator": "^6.9.2",
     "fluent-ffmpeg": "^2.1.2",
+    "handbrake-js": "^5.0.2",
     "hbs": "^4.1.1",
     "http-errors": "~1.6.3",
     "media-thumbnail": "^1.0.0",

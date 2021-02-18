@@ -78,19 +78,20 @@ router.post('/uploader', async function (req, res, next) {
     });
     
     try {
-      var proc = new ffmpeg(videoPath)
-      .takeScreenshots({
+      const ffmpegInstance = new ffmpeg(videoPath);
+      await ffmpegInstance.takeScreenshots({
           count: 1,
           timemarks: [ '5' ] // number of seconds
         }, path.join(videoPathRoot), function(err) {
         console.log('screenshots were saved')
+      }).on('end', () =>  {
+        return res.json(newVideo);
       });
     } catch (err) {
       console.log(err)
       return res.json(newVideo)
     }
     
-    return res.json(newVideo);
 
   } catch (err) {
     console.log(err);
@@ -104,6 +105,15 @@ router.get('/videos', async function (req, res, next) {
   let videos = await Videos.findAll({ where: { userId: req.session.user_id } });
   res.render('my-account/videos', { videos: videos });
 });
+
+router.get('/videos/:id/getTranscodeStatus', async function (req, res, next) {
+  let video = await Videos.findOne({ where: { watchId: req.params.id, userId: req.session.user_id } });
+  if (video) {
+    return res.json({ transcoded: video.transcoded });
+  } else {
+    return res.sendStatus(401);
+  }
+})
 
 router.get('/videos/edit/:id', async function (req, res, next) {
   let video = await Videos.findOne({ where: { watchId: req.params.id } });

@@ -1,4 +1,5 @@
-<h1>Editing: {{video.title}}</h1>
+{{#if video.transcoded }}
+<h1>{{video.title}}</h1>
 
 <div class="video">
     <p><strong>Thumbnail</strong></p>
@@ -24,4 +25,22 @@
         <button type="submit">Done</button>
     </form>
 </div>
+{{else}}
+<h1>Please wait - your video is being transcoded.</h1>
+<h2>This page will refresh when the video has finished being processed.</h2>
+
+<script type="text/javascript">
+    var interval = setInterval(() => {
+        window.fetch('/my-account/videos/{{video.watchId}}/getTranscodeStatus')
+        .then( (data) => {
+            return data.json();
+        })
+        .then ( (status) => {
+            if (status.transcoded) {
+                window.location = window.location;
+            }
+        })
+    }, 1000);
+</script>
+{{/if}}
 

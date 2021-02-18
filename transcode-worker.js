@@ -1,15 +1,14 @@
 const amqp = require('amqplib/callback_api');
 const path = require('path');
 
-const { spawn } = require('child_process');
+const hbjs = require('handbrake-js');
 
 var db = require('./models');
-const { Console } = require('console');
 
 var Videos = db.Video;
 
 amqp.connect('amqp://localhost', function(err, conn) {
-  
+  console.log(err);
   conn.createChannel(function(err, ch) {
     
     const q = 'transcode';
@@ -25,28 +24,18 @@ amqp.connect('amqp://localhost', function(err, conn) {
       const videoPath = path.join(__dirname, './public/videos/', Video.userId.toString(), Video.watchId.toString(), Video.originalFileName.toString());
       const videoPathTranscoded = path.join(__dirname,'/public/videos/', Video.userId.toString(), Video.watchId.toString(), '/transcoded.mp4');
       
-      console.log('HandBrakeCLI --preset-import-file ' + __dirname + '/handbrake-transcoding-defaults.json', '-i "' + videoPath + '"', '-o "' + videoPathTranscoded + '"')
-      const handbrake = spawn('HandBrakeCLI', ['-Z "WEB SSFR Very Fast 1080p30"', '--preset-import-file "' + __dirname + '/handbrake-transcoding-defaults.json"', '-i ' + videoPath, '-o ' + videoPathTranscoded]);
-      console.log(handbrake.spawnargs);
+      const options = {
+        input: videoPath,
+        output: videoPathTranscoded,
+        preset: 'General/Very Fast 1080p30'
+      }
 
-      handbrake.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-      });
-
-
-      handbrake.stderr.on('data', (data) => {
-        console.log(`stdout: ${data}`);
-      });
-      
-      handbrake.on('close', code => {
-        if (code !== 0) {
-          Video.transcoded = true;
-          Video.save();
-        } else {
-          console.log(code);
-          console.log('Transcode error');
-        }
+      await hbjs.exec(options, async (err, stdout, stderr) => {
+        console.log("transcode complete");
+        Video.transcoded = true;
+        await Video.save();
       })
+      
     }, { noAck: true });
     
   });
