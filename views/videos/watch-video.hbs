@@ -1,23 +1,16 @@
-<video
-height=400 
-width=700 
-style="background-color: #000"
-class="video-js"
-id="video"
-controls
-autoplay
-preload="auto"
-data-setup="{}">
-    <source src="/watch/getVideo/{{video.watchId}}" format="video/mp4"/>
+<div class="video">
+  <video height=400 width=700 style="background-color: #000;" class="video-js mx-auto" id="video" controls autoplay
+    preload="auto" data-setup="{}">
+    <source src="/watch/getVideo/{{video.watchId}}" format="video/mp4" />
     <p class="vjs-no-js">
       To view this video please enable JavaScript, and consider upgrading to a
       web browser that
-      <a href="https://videojs.com/html5-video-support/" target="_blank"
-        >supports HTML5 video</a
-      >
+      <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
     </p>
-</video>
-
-<h2 class="text-xl">{{video.title}}</h2>
-<p class="text-xs">{{ video.views }} views</p>
-<p class="text-xs">{{video.likes}} likes</p>
+  </video>
+  <div class="meta mx-8 mt-6">
+    <h2 class="text-xl mb-4">{{video.title}}</h2>
+    <p class="text-xs">{{ video.views }} views</p>
+    <p class="text-xs">{{video.likes}} likes</p>
+  </div>
+</div>

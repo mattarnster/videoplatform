@@ -27,7 +27,7 @@ amqp.connect('amqp://localhost', function(err, conn) {
       const options = {
         input: videoPath,
         output: videoPathTranscoded,
-        preset: 'General/Very Fast 1080p30'
+        preset: 'Web/Vimeo YouTube HQ 1080p60'
       }
 
       await hbjs.exec(options, async (err, stdout, stderr) => {

@@ -81,7 +81,8 @@ router.post('/uploader', async function (req, res, next) {
       const ffmpegInstance = new ffmpeg(videoPath);
       await ffmpegInstance.takeScreenshots({
           count: 1,
-          timemarks: [ '5' ] // number of seconds
+          timemarks: [ '50%' ], // number of seconds,
+          size: '200x112'
         }, path.join(videoPathRoot), function(err) {
         console.log('screenshots were saved')
       }).on('end', () =>  {
@@ -102,7 +103,7 @@ router.post('/uploader', async function (req, res, next) {
 });
 
 router.get('/videos', async function (req, res, next) {
-  let videos = await Videos.findAll({ where: { userId: req.session.user_id } });
+  let videos = await Videos.findAll({ where: { userId: req.session.user_id }, include: Users });
   res.render('my-account/videos', { videos: videos });
 });
 

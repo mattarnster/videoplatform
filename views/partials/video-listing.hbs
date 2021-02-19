@@ -1,0 +1,9 @@
+<div class="videos flex flex-wrap justify-evenly items-stretch">
+    {{#each videos}}
+       <div class="video max-w-xs h-100 flex flex-col items-start">
+           <a class="self-auto" href="/watch?id={{this.watchId}}"><img class="mb-2" src="/videos/{{this.userId}}/{{this.watchId}}/tn.png" alt="{{this.title}}"></a>
+           <p class="text-sm mb-2 text-blue-600"><strong><a href="/watch?id={{this.watchId}}">{{this.title}}</a></strong></p>
+           <p class="text-xs mb-2 justify-end">{{this.User.firstName}} {{this.User.lastName}} - {{this.createdAt}}</p>
+       </div>
+    {{/each}}
+</div>
