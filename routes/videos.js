@@ -9,11 +9,11 @@ var Videos = db.Video;
 /* GET videos */
 router.get('/', async function(req, res, next) {
   if (req.query['id']) {
-    var vid = await Videos.findOne({ where: { watchId: req.query['id'], published: true} });
+    var vid = await Videos.findOne({ where: { watchId: req.query['id'], published: true }, include: User });
     if (vid === null) {
       return res.render('404');
     }
-    return res.render('videos/watch-video', { video: vid });
+    return res.render('videos/watch-video', { video: vid, title: vid.title });
   }
 
   var vids = await Videos.findAll(({ where: { published: true }, include: User }));

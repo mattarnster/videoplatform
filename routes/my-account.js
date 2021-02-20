@@ -153,8 +153,10 @@ router.post('/videos/delete/:id', async function (req, res, next) {
 })
 
 function sendToQueue(video) {
-  amqp.connect('amqp://localhost', function(err, conn) {
+  amqp.connect('amqp://172.23.0.1', function(err, conn) {
+    console.log(err)
     conn.createChannel(function(err, ch) {
+      console.log(err)
       const q = 'transcode';
       ch.assertQueue(q, { durable: true });
       ch.sendToQueue(q, new Buffer.from(JSON.stringify(video)), { persistent: true });

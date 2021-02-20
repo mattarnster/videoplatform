@@ -1,28 +1,27 @@
 {{#if video.transcoded }}
-<h1>{{video.title}}</h1>
+<h2 class="text-xl mb-2">{{video.title}}</h2>
 
 <div class="video">
-    <p><strong>Thumbnail</strong></p>
+    {{!-- <p><strong>Thumbnail</strong></p>
     <img src="/videos/{{video.userId}}/{{video.watchId}}/tn.png" width=200/>
-    <br/>
-    <p><strong>Video</strong></p>
-    <video src="/watch/getVideo/{{video.watchId}}" height=400 width=700 style="background-color: #000" controls></video>
+     --}}
+    <video class="mx-auto mb-12" src="/watch/getVideo/{{video.watchId}}" height=400 width=700 style="background-color: #000" controls></video>
 
     <form action="/my-account/videos/edit/{{video.watchId}}" method="POST">
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" value="{{video.title}}">
-        <br/>
+        
         <label for="description">Description:</label>
-        <br/>
+        
         <textarea name="description" id="description" cols="30" rows="10">{{video.description}}</textarea>
-        <br/>
-        <label for="views">Views: {{video.views}}</label>
-        <br/>
-        <label for="published">Publish this video? 
-            <input type="checkbox" name="published" id="published" value="yes" {{#if video.published}}checked{{/if}}>
-        </label>
-        <br/>
-        <button type="submit">Done</button>
+        
+        <div class="flex flex-col">            
+            <label for="published mb-4">Publish this video? 
+                <input type="checkbox" name="published" id="published" value="yes" {{#if video.published}}checked{{/if}}>
+            </label>
+            
+            <button type="submit mt-4">Done</button>
+        </div>
     </form>
 </div>
 {{else}}

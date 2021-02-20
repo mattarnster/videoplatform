@@ -1,7 +1,7 @@
 <div class="video">
-  <video height=400 width=700 style="background-color: #000;" class="video-js mx-auto" id="video" controls autoplay
-    preload="auto" data-setup="{}">
-    <source src="/watch/getVideo/{{video.watchId}}" format="video/mp4" />
+  <video  width=700 style="background-color: #000;" class="video-js mx-auto vjs-theme-forest" id="video" controls autoplay
+    preload="auto" data-setup="{ techOrder: ['html5'] }">
+    <source src="/watch/getVideo/{{video.watchId}}#.mp4" format="video/mp4" />
     <p class="vjs-no-js">
       To view this video please enable JavaScript, and consider upgrading to a
       web browser that
@@ -9,7 +9,9 @@
     </p>
   </video>
   <div class="meta mx-8 mt-6">
-    <h2 class="text-xl mb-4">{{video.title}}</h2>
+    <h2 class="text-xl mb-2">{{video.title}}</h2>
+    <p class="text-sm mb-6">{{ video.User.userName }}</p>
+    <p class="text-md mb-6">{{ video.description }}</p>
     <p class="text-xs">{{ video.views }} views</p>
     <p class="text-xs">{{video.likes}} likes</p>
   </div>

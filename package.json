@@ -3,15 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build:dev": "webpack --mode development",
+    "watch": "webpack --mode development --watch"
   },
   "dependencies": {
     "ampq": "^2019.5.11",
     "amqplib": "^0.6.0",
+    "autoprefixer": "^10.2.4",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.4",
+    "css-loader": "^5.0.2",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-fileupload": "^1.2.1",
@@ -26,9 +30,16 @@
     "morgan": "~1.9.1",
     "mysql2": "^2.2.5",
     "nanoid": "^3.1.20",
-    "sequelize": "^6.5.0"
+    "postcss": "^8.2.6",
+    "postcss-loader": "^5.0.0",
+    "sequelize": "^6.5.0",
+    "style-loader": "^2.0.0",
+    "tailwindcss": "^2.0.3",
+    "webpack": "^5.23.0",
+    "webpack-cli": "^4.5.0"
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.0",
     "nodemon": "^2.0.7"
   }
 }

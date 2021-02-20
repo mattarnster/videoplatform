@@ -20,7 +20,13 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
     channelName: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    userName: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.firstName} ${this.lastName}`;
+      }
+    }
   }, {
     sequelize,
     modelName: 'User',

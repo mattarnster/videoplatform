@@ -7,7 +7,7 @@ var db = require('./models');
 
 var Videos = db.Video;
 
-amqp.connect('amqp://localhost', function(err, conn) {
+amqp.connect('amqp://172.23.0.1', function(err, conn) {
   console.log(err);
   conn.createChannel(function(err, ch) {
     

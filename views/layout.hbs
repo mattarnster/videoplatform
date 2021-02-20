@@ -2,14 +2,15 @@
 <html>
 
 <head>
-  <title>{{title}}</title>
+  <title>{{title}} | videoplatform</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.2/dropzone.min.css"
     integrity="sha512-3g+prZHHfmnvE1HBLwUnVuunaPOob7dpksI7/v6UnF/rnKGwHf/GdEq9K7iEN7qTtW+S0iivTcGpeTBqqB04wA=="
     crossorigin="anonymous" />
   <link href="https://vjs.zencdn.net/7.10.2/video-js.css" rel="stylesheet" />
+  <link href="https://unpkg.com/@videojs/themes@1/dist/forest/index.css" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css">
-  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  {{!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel='stylesheet' href='/stylesheets/style.css' /> --}}
 </head>
 
 <body class="container mx-auto">
@@ -46,6 +47,8 @@
   <div class="main-wrapper">
     {{{body}}}
   </div>
+  <script src="/js/main.js"></script>
+  <script src="https://vjs.zencdn.net/7.10.2/video.min.js"></script>
 </body>
 
 </html>
